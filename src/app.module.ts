@@ -6,6 +6,7 @@ import { MySQLModule } from './config/database/mysql/mysql.module';
 import { configuration } from './config/env/configuration';
 import { validationSchema } from './config/env/validation-schema';
 import { ActiveModule } from './module/active.module';
+import { TypeAccountModule } from './module/type-account.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ActiveModule } from './module/active.module';
     }),
     MySQLModule,
     ActiveModule,
+    TypeAccountModule,
   ],
   controllers: [AppController],
   providers: [AppService],

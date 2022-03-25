@@ -1,6 +1,9 @@
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
+import { AccountEntity } from 'src/entities/account.entity';
 import { ActiveEntity } from 'src/entities/Active.entity';
+import { RefreshTokenEntity } from 'src/entities/refresh-token.entity';
+import { TypeAccountEntity } from 'src/entities/type-account.entity';
 
 export class MySQLConfig {
   public static async getMySQLConfigSequelize(
@@ -14,7 +17,12 @@ export class MySQLConfig {
         username: config.get<string>('db_username'),
         password: config.get<string>('db_password'),
         database: config.get<string>('db_name'),
-        models: [ActiveEntity],
+        models: [
+          ActiveEntity,
+          TypeAccountEntity,
+          AccountEntity,
+          RefreshTokenEntity,
+        ],
         autoLoadModels: true,
         synchronize: true,
         logging:

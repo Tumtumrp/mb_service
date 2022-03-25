@@ -11,6 +11,25 @@ async function bootstrap() {
   const config: ConfigService = app.get(ConfigService);
   const port: number = config.get<number>('port');
 
+  if (config.get<string>('NODE_ENV') === 'production') {
+    const whitelist: string[] = config.get<string>('origin').split(',');
+    app.enableCors({
+      origin: (origin, cb) => {
+        if (whitelist.indexOf(origin) !== -1) {
+          logger.log(`allowed cors for: ${origin}`);
+          cb(null, true);
+        } else {
+          logger.error(`blocked cors for: ${origin}`);
+          cb(new Error('Not allowed by CORS'));
+        }
+      },
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      optionsSuccessStatus: 200,
+    });
+  } else {
+    app.enableCors();
+  }
+
   app.setGlobalPrefix('/api/v1');
   Swagger.run(app);
   await app.listen(port);
