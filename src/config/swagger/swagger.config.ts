@@ -1,4 +1,4 @@
-import { SwaggerOptions } from 'src/common/interface/Swagger-options.interface';
+import { SwaggerOptions } from 'src/common/interface/swagger-options.interface';
 
 export const swaggerConfig: SwaggerOptions = {
   title: 'Shopping online Application',

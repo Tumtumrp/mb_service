@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { MySQLModule } from './config/database/mysql/mysql.module';
 import { configuration } from './config/env/configuration';
 import { validationSchema } from './config/env/validation-schema';
+import { ActiveModule } from './module/active.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { validationSchema } from './config/env/validation-schema';
       load: [configuration],
       validationSchema: validationSchema,
     }),
+    MySQLModule,
+    ActiveModule,
   ],
   controllers: [AppController],
   providers: [AppService],
