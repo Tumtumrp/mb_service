@@ -1,6 +1,7 @@
 import {
   AllowNull,
   AutoIncrement,
+  BelongsTo,
   Column,
   DataType,
   Default,
@@ -35,6 +36,9 @@ export class AccountEntity extends Model {
   @Default(2)
   @Column({ type: DataType.INTEGER({ length: 10 }), field: 'type_account_id' })
   typeAccountId: number;
+
+  @BelongsTo(() => TypeAccountEntity)
+  typeAccount: TypeAccountEntity;
 
   @Unique
   @AllowNull(false)

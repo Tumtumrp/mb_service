@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { MySQLModule } from './config/database/mysql/mysql.module';
 import { configuration } from './config/env/configuration';
 import { validationSchema } from './config/env/validation-schema';
+import { AuthModule } from './module/auth.module';
 import { ActiveModule } from './module/active.module';
 import { TypeAccountModule } from './module/type-account.module';
 
@@ -20,6 +21,7 @@ import { TypeAccountModule } from './module/type-account.module';
     }),
     MySQLModule,
     ActiveModule,
+    AuthModule,
     TypeAccountModule,
   ],
   controllers: [AppController],
