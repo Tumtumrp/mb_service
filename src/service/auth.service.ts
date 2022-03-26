@@ -8,6 +8,7 @@ import { Payload } from 'src/dto/model/payload.dto';
 import { RegisterCreated } from 'src/dto/model/register-created.dto';
 import { RegisterRequest } from 'src/dto/request/register-request.dto';
 import { BaseCreatedResponse } from 'src/dto/response/base-created-response.dto';
+import { LogoutResponse } from 'src/dto/response/logout-response.dto';
 import { Tokens } from 'src/dto/response/tokens.dto';
 import { AccountEntity } from 'src/entities/account.entity';
 import { AccountModel } from 'src/model/account.model';
@@ -55,6 +56,17 @@ export class AuthService {
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
+  }
+
+  public async logout(accountId: number): Promise<LogoutResponse> {
+    const refreshToken: boolean =
+      await this.refreshTokenModel.updateByAccountId(accountId, null);
+    if (!refreshToken) throw new InternalServerErrorException();
+
+    return new LogoutResponse({
+      status: refreshToken,
+      message: 'logout your account successfully',
+    });
   }
 
   public async register(

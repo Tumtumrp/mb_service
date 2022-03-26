@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBasicAuth,
+  ApiBearerAuth,
   ApiExtraModels,
   ApiOkResponse,
   ApiTags,
@@ -23,6 +24,7 @@ import { BaseCreatedResponse } from 'src/dto/response/base-created-response.dto'
 import { RegisterCreated } from 'src/dto/model/register-created.dto';
 import { ApiOkBaseCreatedResponse } from 'src/common/decorator/api-ok-base-created-response.decorator';
 import { ApiBadResponse } from 'src/common/decorator/api-bad-response.decorator';
+import { LogoutResponse } from 'src/dto/response/logout-response.dto';
 
 @ApiTags('AuthController')
 @ApiExtraModels(BaseCreatedResponse, RegisterCreated)
@@ -40,6 +42,19 @@ export class AuthController {
   @Get('login')
   public async login(@RequestUser() user: Payload): Promise<Tokens> {
     return await this.authService.login(user);
+  }
+
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    description: 'logout your account successfully',
+    type: LogoutResponse,
+  })
+  @HttpCode(HttpStatus.OK)
+  @Get('logout')
+  public async logout(
+    @RequestUser('_id') accountId: number,
+  ): Promise<LogoutResponse> {
+    return await this.authService.logout(accountId);
   }
 
   @ApiOkBaseCreatedResponse(RegisterCreated, 'create new account successfully')

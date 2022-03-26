@@ -11,6 +11,16 @@ export class AccountModel {
     @InjectModel(AccountEntity) private accountModel: typeof AccountEntity,
   ) {}
 
+  public async findAll(): Promise<AccountEntity[]> {
+    try {
+      return await this.accountModel.findAll({
+        include: { model: TypeAccountEntity },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
   public async findByUsername(username: string): Promise<AccountEntity> {
     try {
       return await this.accountModel.findOne({

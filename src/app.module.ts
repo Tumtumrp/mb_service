@@ -8,6 +8,7 @@ import { validationSchema } from './config/env/validation-schema';
 import { AuthModule } from './module/auth.module';
 import { ActiveModule } from './module/active.module';
 import { TypeAccountModule } from './module/type-account.module';
+import { AccountModule } from './module/account.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TypeAccountModule } from './module/type-account.module';
     ActiveModule,
     AuthModule,
     TypeAccountModule,
+    AccountModule,
   ],
   controllers: [AppController],
   providers: [AppService],
