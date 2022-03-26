@@ -1,7 +1,6 @@
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { swaggerConfig } from './swagger.config';
-
 export class Swagger {
   public static run(app: NestExpressApplication): void {
     const docs: DocumentBuilder = new DocumentBuilder()

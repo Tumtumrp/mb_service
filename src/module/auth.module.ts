@@ -9,6 +9,8 @@ import { RefreshTokenEntity } from 'src/entities/refresh-token.entity';
 import { RefreshTokenModel } from 'src/model/refresh-token.model';
 import { AuthService } from 'src/service/auth.service';
 import { BcryptModule } from 'src/utils/bcrypt/bcrypt.module';
+import { ReadFileModule } from 'src/utils/read-file/read-file.module';
+import { ValidationModule } from 'src/utils/validation/validation.module';
 import { AccountModel } from '../model/account.model';
 
 @Module({
@@ -17,6 +19,8 @@ import { AccountModel } from '../model/account.model';
     PassportModule,
     JwtModule.register({}),
     BcryptModule,
+    ReadFileModule,
+    ValidationModule,
   ],
   controllers: [AuthController],
   providers: [AccountModel, RefreshTokenModel, AuthService, BasicStrategy],

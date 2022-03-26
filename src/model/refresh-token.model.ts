@@ -9,6 +9,14 @@ export class RefreshTokenModel {
     private refreshTokenModel: typeof RefreshTokenEntity,
   ) {}
 
+  public async create(accountId: number): Promise<RefreshTokenEntity> {
+    try {
+      return await this.refreshTokenModel.create({ accountId });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
   public async updateByAccountId(
     accountId: number,
     refreshTokenHash: string,
