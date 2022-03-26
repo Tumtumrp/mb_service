@@ -20,4 +20,34 @@ export class AccountService {
       });
     });
   }
+
+  public async searchByUsername(username: string): Promise<AccountResponse[]> {
+    const accounts: AccountEntity[] =
+      await this.accountModel.findAllByUsernameLike(username);
+
+    return accounts.map((account) => {
+      return new AccountResponse({
+        accountId: account.accountId,
+        username: account.username,
+        email: account.email,
+        role: account.typeAccount.typeAccountName,
+        activeId: account.activeId,
+      });
+    });
+  }
+
+  public async searchByEmail(email: string): Promise<AccountResponse[]> {
+    const accounts: AccountEntity[] =
+      await this.accountModel.findAllByEmailLike(email);
+
+    return accounts.map((account) => {
+      return new AccountResponse({
+        accountId: account.accountId,
+        username: account.username,
+        email: account.email,
+        role: account.typeAccount.typeAccountName,
+        activeId: account.activeId,
+      });
+    });
+  }
 }

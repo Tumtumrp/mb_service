@@ -21,6 +21,30 @@ export class AccountModel {
     }
   }
 
+  public async findAllByUsernameLike(
+    username: string,
+  ): Promise<AccountEntity[]> {
+    try {
+      return await this.accountModel.findAll({
+        where: { username: { [Op.like]: `${username}%` } },
+        include: { model: TypeAccountEntity },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
+  public async findAllByEmailLike(email: string): Promise<AccountEntity[]> {
+    try {
+      return await this.accountModel.findAll({
+        where: { email: { [Op.like]: `${email}%` } },
+        include: { model: TypeAccountEntity },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
   public async findByUsername(username: string): Promise<AccountEntity> {
     try {
       return await this.accountModel.findOne({
