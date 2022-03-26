@@ -78,12 +78,12 @@ export class AuthService {
       const account: AccountEntity = await this.accountModel.findByPK(
         accountId,
       );
-      if (!account || !account.refreshToken.refreshTOkenHash)
+      if (!account || !account.refreshToken.refreshTokenHash)
         throw new ForbiddenException('Access Denied');
 
       const isMatchToken: boolean = await this.bcryptService.compare(
         refreshToken.split('.')[2],
-        account.refreshToken.refreshTOkenHash,
+        account.refreshToken.refreshTokenHash,
       );
       if (!isMatchToken) throw new ForbiddenException('Access Denied');
 
@@ -156,7 +156,7 @@ export class AuthService {
           { _id: data._id, username: data.username, role: data.role },
           {
             privateKey: this.readFileService.privateKey(
-              '\\src\\assets\\key\\auth',
+              '\\src\\resource\\key\\auth',
             ),
             algorithm: 'RS256',
             expiresIn: '15m',
@@ -166,7 +166,7 @@ export class AuthService {
           { _id: data._id, username: data.username, role: data.role },
           {
             privateKey: this.readFileService.privateKey(
-              '\\src\\assets\\key\\refresh',
+              '\\src\\resource\\key\\refresh',
             ),
             algorithm: 'RS256',
             expiresIn: '7d',

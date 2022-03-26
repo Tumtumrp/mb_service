@@ -29,5 +29,5 @@ export class RefreshTokenEntity extends Model {
   @AllowNull(true)
   @Default(null)
   @Column({ type: DataType.TEXT, field: 'refresh_token_hash' })
-  refreshTOkenHash: string;
+  refreshTokenHash: string;
 }
