@@ -6,6 +6,7 @@ import {
   DataType,
   Default,
   ForeignKey,
+  HasMany,
   HasOne,
   IsEmail,
   Model,
@@ -14,6 +15,7 @@ import {
   Unique,
 } from 'sequelize-typescript';
 import { ActiveEntity } from './Active.entity';
+import { AddressEntity } from './address.entity';
 import { RefreshTokenEntity } from './refresh-token.entity';
 import { TypeAccountEntity } from './type-account.entity';
 
@@ -57,4 +59,7 @@ export class AccountEntity extends Model {
 
   @HasOne(() => RefreshTokenEntity)
   refreshToken: RefreshTokenEntity;
+
+  @HasMany(() => AddressEntity)
+  addresses: AddressEntity[];
 }
