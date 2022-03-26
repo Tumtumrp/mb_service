@@ -3,6 +3,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { BasicStrategy } from 'src/auth/strategies/basic.strategy';
+import { JwtRefreshStrategy } from 'src/auth/strategies/jwt-refresh.strategy';
+import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
 import { AuthController } from 'src/controller/auth.controller';
 import { AccountEntity } from 'src/entities/account.entity';
 import { RefreshTokenEntity } from 'src/entities/refresh-token.entity';
@@ -23,7 +25,14 @@ import { AccountModel } from '../model/account.model';
     ValidationModule,
   ],
   controllers: [AuthController],
-  providers: [AccountModel, RefreshTokenModel, AuthService, BasicStrategy],
+  providers: [
+    AccountModel,
+    RefreshTokenModel,
+    AuthService,
+    BasicStrategy,
+    JwtStrategy,
+    JwtRefreshStrategy,
+  ],
   exports: [SequelizeModule],
 })
 export class AuthModule {}

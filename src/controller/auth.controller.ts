@@ -26,6 +26,9 @@ import { ApiOkBaseCreatedResponse } from 'src/common/decorator/api-ok-base-creat
 import { ApiBadResponse } from 'src/common/decorator/api-bad-response.decorator';
 import { LogoutResponse } from 'src/dto/response/logout-response.dto';
 import { PayloadRefresh } from 'src/dto/model/payload-refresh.dto';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { JwtRefreshAuthGuard } from 'src/auth/guard/jwt-refresh.guard';
+import { ApiUnauthorizedBaseResponse } from 'src/common/decorator/api-unauthorized-base-response.decorator';
 
 @ApiTags('AuthController')
 @ApiExtraModels(BaseCreatedResponse, RegisterCreated)
@@ -38,6 +41,7 @@ export class AuthController {
     description: 'login account successfully',
     type: Tokens,
   })
+  @ApiUnauthorizedBaseResponse()
   @UseGuards(BasicAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Get('login')
@@ -50,6 +54,8 @@ export class AuthController {
     description: 'logout your account successfully',
     type: LogoutResponse,
   })
+  @ApiUnauthorizedBaseResponse()
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Get('logout')
   public async logout(
@@ -63,7 +69,9 @@ export class AuthController {
     description: 'login account successfully',
     type: Tokens,
   })
+  @ApiUnauthorizedBaseResponse()
   @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtRefreshAuthGuard)
   @Get('refresh-token')
   public async refreshToken(
     @RequestUser() user: PayloadRefresh,
