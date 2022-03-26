@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
@@ -67,6 +68,36 @@ export class AuthService {
       status: refreshToken,
       message: 'logout your account successfully',
     });
+  }
+
+  public async refreshToken(
+    accountId: number,
+    refreshToken: string,
+  ): Promise<Tokens> {
+    try {
+      const account: AccountEntity = await this.accountModel.findByPK(
+        accountId,
+      );
+      if (!account || !account.refreshToken.refreshTOkenHash)
+        throw new ForbiddenException('Access Denied');
+
+      const isMatchToken: boolean = await this.bcryptService.compare(
+        refreshToken.split('.')[2],
+        account.refreshToken.refreshTOkenHash,
+      );
+      if (!isMatchToken) throw new ForbiddenException('Access Denied');
+
+      const token: Tokens = await this.getToken({
+        _id: account.accountId,
+        username: account.username,
+        role: account.typeAccount.typeAccountName,
+      });
+      await this.updateRefreshToken(account.accountId, token.refreshToken);
+
+      return token;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
   public async register(

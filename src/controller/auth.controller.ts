@@ -25,6 +25,7 @@ import { RegisterCreated } from 'src/dto/model/register-created.dto';
 import { ApiOkBaseCreatedResponse } from 'src/common/decorator/api-ok-base-created-response.decorator';
 import { ApiBadResponse } from 'src/common/decorator/api-bad-response.decorator';
 import { LogoutResponse } from 'src/dto/response/logout-response.dto';
+import { PayloadRefresh } from 'src/dto/model/payload-refresh.dto';
 
 @ApiTags('AuthController')
 @ApiExtraModels(BaseCreatedResponse, RegisterCreated)
@@ -55,6 +56,22 @@ export class AuthController {
     @RequestUser('_id') accountId: number,
   ): Promise<LogoutResponse> {
     return await this.authService.logout(accountId);
+  }
+
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    description: 'login account successfully',
+    type: Tokens,
+  })
+  @HttpCode(HttpStatus.OK)
+  @Get('refresh-token')
+  public async refreshToken(
+    @RequestUser() user: PayloadRefresh,
+  ): Promise<Tokens> {
+    return await this.authService.refreshToken(
+      user.payload._id,
+      user.refreshToken,
+    );
   }
 
   @ApiOkBaseCreatedResponse(RegisterCreated, 'create new account successfully')

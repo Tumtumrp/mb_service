@@ -69,6 +69,16 @@ export class AccountModel {
     }
   }
 
+  public async findByPK(accountId: number): Promise<AccountEntity> {
+    try {
+      return await this.accountModel.findByPk(accountId, {
+        include: { model: TypeAccountEntity },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
   public async create(account: RegisterRequest): Promise<AccountEntity> {
     try {
       return await this.accountModel.create({
