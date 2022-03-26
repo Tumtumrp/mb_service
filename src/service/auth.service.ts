@@ -132,7 +132,9 @@ export class AuthService {
         this.jwtService.signAsync(
           { _id: data._id, username: data.username, role: data.role },
           {
-            privateKey: this.readFileService.privateKey('\\src\\assets\\auth'),
+            privateKey: this.readFileService.privateKey(
+              '\\src\\assets\\refresh',
+            ),
             algorithm: 'RS256',
             expiresIn: '7d',
           },
