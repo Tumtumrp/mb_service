@@ -9,6 +9,7 @@ import { AuthModule } from './module/auth.module';
 import { ActiveModule } from './module/active.module';
 import { TypeAccountModule } from './module/type-account.module';
 import { AccountModule } from './module/account.module';
+import { AddressModule } from './module/address.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AccountModule } from './module/account.module';
     AuthModule,
     TypeAccountModule,
     AccountModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [AppService],

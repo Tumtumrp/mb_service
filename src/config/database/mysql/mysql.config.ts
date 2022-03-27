@@ -2,6 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
 import { AccountEntity } from 'src/entities/account.entity';
 import { ActiveEntity } from 'src/entities/Active.entity';
+import { AddressEntity } from 'src/entities/address.entity';
 import { RefreshTokenEntity } from 'src/entities/refresh-token.entity';
 import { TypeAccountEntity } from 'src/entities/type-account.entity';
 
@@ -22,6 +23,7 @@ export class MySQLConfig {
           TypeAccountEntity,
           AccountEntity,
           RefreshTokenEntity,
+          AddressEntity,
         ],
         autoLoadModels: true,
         synchronize: true,

@@ -43,7 +43,7 @@ export class AddressEntity extends Model {
 
   @AllowNull(false)
   @Column({ type: DataType.STRING(5), field: 'zip_code' })
-  ZipCode: string;
+  zipCode: string;
 
   @AllowNull(false)
   @Column({ type: DataType.TEXT, field: 'line' })
@@ -55,5 +55,5 @@ export class AddressEntity extends Model {
     type: DataType.ENUM('WORKPLACE', 'HOME'),
     field: 'default_sand_address',
   })
-  defaultSand: DefaultSandAddress;
+  defaultSandAddress: DefaultSandAddress;
 }
