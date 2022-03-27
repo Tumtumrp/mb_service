@@ -30,7 +30,7 @@ export class ActiveController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @Get()
+  @Get('get-actives')
   public async getAllActive(): Promise<ActiveResponse[]> {
     return this.activeService.getAllActive();
   }

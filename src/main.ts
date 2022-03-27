@@ -1,7 +1,8 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { Swagger } from './config/swagger';
 
@@ -11,6 +12,7 @@ async function bootstrap() {
   const config: ConfigService = app.get(ConfigService);
   const port: number = config.get<number>('port');
 
+  app.use(helmet());
   if (config.get<string>('NODE_ENV') === 'production') {
     const whitelist: string[] = config.get<string>('origin').split(',');
     app.enableCors({
@@ -31,6 +33,13 @@ async function bootstrap() {
   }
 
   app.setGlobalPrefix('/api/v1');
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      disableErrorMessages: false,
+    }),
+  );
   Swagger.run(app);
   await app.listen(port);
   logger.log(`application server running on port ${port}`);

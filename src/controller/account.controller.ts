@@ -31,7 +31,7 @@ export class AccountController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @Get()
+  @Get('get-accounts')
   public async getAllAccount(): Promise<AccountResponse[]> {
     return await this.accountService.getAllAccount();
   }

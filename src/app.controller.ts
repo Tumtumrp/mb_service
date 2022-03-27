@@ -3,12 +3,12 @@ import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
 @ApiTags('ApplicationController')
-@Controller()
+@Controller('application')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
+  getHello(): any {
     return this.appService.getHello();
   }
 }

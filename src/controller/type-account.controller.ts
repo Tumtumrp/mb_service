@@ -30,7 +30,7 @@ export class TypeAccountController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @Get()
+  @Get('get-types-account')
   public async getAllTypeAccount(): Promise<TypeAccountResponse[]> {
     return await this.typeAccountService.getAllTypeAccount();
   }
